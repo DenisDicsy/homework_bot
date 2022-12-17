@@ -35,9 +35,9 @@ logger.addHandler(handler)
 
 def check_tokens():
     """
-    Функция проверки того, что определены все переменные окружения
+    Функция проверки того, что определены все переменные окружения.
 
-    Выбрысывает ошибка и логируется уровнем critical в противном случае
+    Выбрысывает ошибка и логируется уровнем critical в противном случае.
     """
     if not all([PRACTICUM_TOKEN, TELEGRAM_TOKEN, TELEGRAM_CHAT_ID]):
         logger.critical("Не хватает переменных окружения")
@@ -46,7 +46,7 @@ def check_tokens():
 
 def send_message(bot: telegram.Bot, message):
     """
-    Отправляет сообщение message через telegram Bot - bot
+    Отправляет сообщение message через telegram Bot - bot.
 
     При неудачное отправке логируем ошибку уровнем error
     """
@@ -54,7 +54,7 @@ def send_message(bot: telegram.Bot, message):
         bot.send_message(TELEGRAM_CHAT_ID, message)
         logger.debug("Отправили сообщение через бота")
     except Exception as error:
-        logger.error("Не удалось отправить сообщение через бота")
+        logger.error(f"Не удалось отправить сообщение через бота{error}")
 
 
 def get_api_answer(timestamp):
@@ -75,15 +75,15 @@ def get_api_answer(timestamp):
         logger.error(f"Получили ошибку при запросе {error}")
         raise Exception("Ошибка при запросе")
     if response.status_code != requests.codes.ok:
-        logger.error(f"Мы получили плохой ответ")
+        logger.error("Мы получили плохой ответ")
         raise Exception("Мы получили плохой ответ")
     return response.json()
 
 
 def check_response(response):
     """
-    Проверяет то, что ответ API был приведен к типу данных dict,а так же то, что в ответе
-    имеется ключ homeworks типа данных list
+    Проверяет то, что ответ API был приведен к типу данных dict.
+    а так же то, что в ответе имеется ключ homeworks типа данных list
     """
     if not isinstance(response, dict) or not isinstance(
         response.get("homeworks"), list
