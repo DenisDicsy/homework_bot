@@ -58,10 +58,10 @@ def check_tokens():
     for env_variable in env_variables:
         if not env_variable:
             logger.critical(
-                f"Не хватает переменной окружение {env_variables.get(env_variable)}"
+                f"Нет переменной окружения {env_variables.get(env_variable)}"
             )
             raise NoneEnvVariableException(
-                f"Не хватает переменной окружение {env_variables.get(env_variable)}"
+                f"Нет переменной окружения {env_variables.get(env_variable)}"
             )
 
 
