@@ -60,9 +60,8 @@ def check_tokens():
             logger.critical(
                 f"Нет переменной окружения {env_variables.get(env_variable)}"
             )
-            raise NoneEnvVariableException(
-                f"Нет переменной окружения {env_variables.get(env_variable)}"
-            )
+            return False
+    return True
 
 
 def send_message(bot: telegram.Bot, message):
@@ -111,9 +110,7 @@ def check_response(response):
     if "homeworks" not in response or "current_date" not in response:
         raise TypeError("Неправильное наполнение ответа API")
     if not isinstance(response.get("homeworks"), list):
-        raise TypeError(
-            'Значение ключа "homework" должно быть типом данных list'
-        )
+        raise TypeError("Значение ключа homework должно быть типом данных list")
     return True
 
 
@@ -135,7 +132,8 @@ def parse_status(homework):
 
 def main():
     """Основная логика работы бота."""
-    check_tokens()
+    if not check_tokens():
+        raise NoneEnvVariableException("Нет переменной окружения")
     try:
         bot = telegram.Bot(token=TELEGRAM_TOKEN)
     except telegram.error.InvalidToken:
