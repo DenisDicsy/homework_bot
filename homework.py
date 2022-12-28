@@ -110,7 +110,7 @@ def check_response(response):
     if "homeworks" not in response or "current_date" not in response:
         raise TypeError("Неправильное наполнение ответа API")
     if not isinstance(response.get("homeworks"), list):
-        raise TypeError("Значение ключа homework должно быть типом данных list")
+        raise TypeError("Значение homework должно быть типом данных list")
     return True
 
 
